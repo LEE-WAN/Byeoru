@@ -6,6 +6,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
     "logform": "^2.1.2",
+    "logicflow": "^1.0.1",
     "mongodb": "^3.1.13",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",

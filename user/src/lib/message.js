@@ -31,12 +31,4 @@ const send = async (to, type, content) => {
   return result;
 };
 
-const chkMsg = (body) => {
-  if (!Object.prototype.hasOwnProperty.call(body, 'from')
-  || !Object.prototype.hasOwnProperty.call(body, 'to')
-  || !Object.prototype.hasOwnProperty.call(body, 'type')
-  || !Object.prototype.hasOwnProperty.call(body, 'content')) return true;
-  return false;
-};
-
-module.exports = { send, chkMsg };
+module.exports = { send };

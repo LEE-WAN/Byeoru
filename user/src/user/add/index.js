@@ -1,12 +1,7 @@
-const logger = require('../../lib/logger');
 const database = require('../../lib/database');
-const { send } = require('../../lib/message');
 
-const add = async (client) => {
-  const res = {
-    statusCode: 400,
-    body: {},
-  };
+const add = async (store) => {
+  const { client, res } = store;
 
   const user = {};
 
@@ -22,17 +17,20 @@ const add = async (client) => {
     user.nickname = nickname || name;
     user.oauth = oauth || {};
   } else {
-    res.statusCode = 400;
-    res.body = {
-      message: 'Invalid request',
-    };
-    logger.error(JSON.stringify({ msg: 'INVALID REQUEST', ...client }));
-    return res;
+    store.errMsg = 'Invalid user add format';
+    store.errCode = 400;
+    throw Error('Invalid user add format');
   }
 
   res.body = await database.getNextCount('userId');
-
-  return res;
 };
 
-module.exports = add;
+module.exports = async (store) => {
+  try {
+    await add(store);
+  } catch (err) {
+    store.errMsg = 'Internal Server Error';
+    store.errCode = 500;
+    throw err;
+  }
+};

@@ -15,6 +15,7 @@ let isTry2Connect = false;
 
 const Connect2DB = async () => {
   if (!result.Mongo.isConnected() && !isTry2Connect) {
+    delete result.db;
     logger.info(`Try connecting to [${DB_NAME}] database`);
     isTry2Connect = true;
     try {

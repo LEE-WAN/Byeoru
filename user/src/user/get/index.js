@@ -1,13 +1,8 @@
-const logger = require('../../lib/logger');
 const database = require('../../lib/database');
-const { send } = require('../../lib/message');
 
-const add = async (client) => {
+const get = async (store) => {
+  const { client, res } = store;
   const col = await database.db.collection('user');
-  const res = {
-    statusCode: 400,
-    body: {},
-  };
   const { userId, googleId } = client.body.content;
 
   let result = null;
@@ -20,21 +15,27 @@ const add = async (client) => {
       googleId,
     });
   } else {
-    res.body.message = 'INVALID USER REQUEST';
-    logger.error(JSON.stringify({ msg: 'INVALID USER REQUEST', ...client }));
-    return res;
+    store.errMsg = 'Invalid user request format';
+    store.errCode = 400;
+    throw new Error('Invalid user request format');
   }
 
   if (!result) {
-    res.statusCode = 404;
-    res.body.message = 'USER NOT FOUND';
+    store.errMsg = 'User not found';
+    store.errCode = 404;
+    throw new Error('User not found');
   } else {
     res.statusCode = 200;
     res.body = result;
-    logger.info(`id: ${userId}`);
+    store.logger.info(`id: ${result.userId}`);
   }
-
-  return res;
 };
-
-module.exports = add;
+module.exports = async (store) => {
+  try {
+    await get(store);
+  } catch (err) {
+    store.errMsg = 'Internal Server Error';
+    store.errCode = 500;
+    throw err;
+  }
+};
