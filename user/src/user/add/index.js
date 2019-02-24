@@ -7,7 +7,7 @@ const add = async (store) => {
 
   const {
     name, googleId, email, image, nickname, oauth,
-  } = client.body;
+  } = client.body.content;
 
   if (name && email && (googleId)) {
     user.name = name;
@@ -22,15 +22,25 @@ const add = async (store) => {
     throw Error('Invalid user add format');
   }
 
-  res.body = await database.getNextCount('userId');
+  const col = await database.db.collection('user');
+  const result = await col.findOne({
+    $or: [
+      { googleId },
+      { name },
+    ],
+  });
+  if (result) {
+    store.errMsg = 'Duplicated user infomation';
+    store.errCode = 403;
+    throw new Error('Duplicated user infomation');
+  }
+
+  user.userId = await database.getNextCount('userId');
+  col.insertOne(user);
+
+  res.statusCode = 200;
+  res.body = user;
+  store.logger.info(`user added: ${JSON.stringify(user)}`);
 };
 
-module.exports = async (store) => {
-  try {
-    await add(store);
-  } catch (err) {
-    store.errMsg = 'Internal Server Error';
-    store.errCode = 500;
-    throw err;
-  }
-};
+module.exports = add;
