@@ -4,18 +4,20 @@
         to: 'post',
         type: 'add',
         content: {
-            title: '',
-            link: '',
+            title
+            author
             tags: {
+                genre
+                about
+                hash
             }
-            content: '',
+            content
+
+            link
             meta: {
-                title: '',
-                abstract: '',
-                thumbnail: 'url'
-            }
-            auth: {
-                user_id: 1
+                title
+                abstract
+                thumbnail
             }
         }
     }

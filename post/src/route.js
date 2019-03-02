@@ -1,25 +1,16 @@
-const logger = require('./lib/logger');
 const func = require('./post');
-const { chkMsg } = require('./lib/message');
 
-const route = (client) => {
-  let res = {
-    statusCode: 400,
-    body: {},
-  };
-  const { body } = client;
-  if (chkMsg(body)) {
-    res.body.message = 'Invalid message format';
-    logger.error(`${JSON.stringify({ msg: 'INVALID MESSAGE FORMAT', ...client })}`);
-    return res;
-  }
+const route = async (store, ctx) => {
+  const { body } = store.client;
+
   if (func[body.type] !== undefined) {
-    res = func[body.type](client);
+    await func[body.type](store);
   } else {
-    res.body.message = 'Invalid request type';
-    logger.error(`${JSON.stringify({ msg: 'INVALID REQUEST TYPE', ...client })}`);
+    store.errMsg = 'Invalid Request Type';
+    store.errCode = 400;
+    throw new Error('Invalid Request Type');
   }
-  return res;
+  await ctx.next();
 };
 
 module.exports = route;

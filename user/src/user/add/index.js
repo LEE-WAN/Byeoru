@@ -37,6 +37,7 @@ const add = async (store) => {
   }
 
   user.userId = await database.getNextCount('userId');
+  user.date = new Date();
   col.insertOne(user);
 
   res.statusCode = 200;
