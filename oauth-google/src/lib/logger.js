@@ -9,7 +9,7 @@ const alignedWithColorsAndTime = format.combine(
 );
 
 const logger = winston.createLogger({
-  level: 'info',
+  level: 'debug',
   // https://github.com/winstonjs/logform.
   format: alignedWithColorsAndTime,
   defaultMeta: { service: 'user-service' },

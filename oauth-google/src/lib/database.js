@@ -8,18 +8,20 @@ const {
 const authMechanism = 'DEFAULT';
 const url = `mongodb://${DB_USER}:${DB_PASS}@${DB_HOST}/?authSource=auctor&authMechanism=${authMechanism}`;
 
-const Mongo = new MongoClient(url, { useNewUrlParser: true });
-let db;
+const result = {};
+result.Mongo = new MongoClient(url, { useNewUrlParser: true });
+
 let isTry2Connect = false;
 
 const Connect2DB = async () => {
-  if (!Mongo.isConnected() && !isTry2Connect) {
+  if (!result.Mongo.isConnected() && !isTry2Connect) {
+    delete result.db;
     logger.info(`Try connecting to [${DB_NAME}] database`);
     isTry2Connect = true;
     try {
-      await Mongo.connect();
-      db = Mongo.db(DB_NAME);
-      await db.collection('log').insertOne({ date: new Date() });
+      await result.Mongo.connect();
+      result.db = result.Mongo.db(DB_NAME);
+      await result.db.collection('log').insertOne({ date: new Date() });
       logger.info(`Successfully connected to [${DB_NAME}]`);
     } catch (err) {
       logger.error(err);
@@ -28,7 +30,22 @@ const Connect2DB = async () => {
   }
 };
 
+Connect2DB();
+
+result.getNextCount = async (sequenceName) => {
+  const col = await result.db.collection('counters');
+  const sequenceDocument = await col.findOneAndUpdate(
+    { _id: sequenceName },
+    { $inc: { sequence_value: 1 } },
+    {
+      upsert: true,
+      returnNewDocument: true,
+    },
+  );
+  return sequenceDocument.value.sequence_value;
+};
+
 // Chk if db is disconnected every 3 seconds.
 setInterval(() => { Connect2DB(); }, 3000);
 
-module.exports = db;
+module.exports = result;
