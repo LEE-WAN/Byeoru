@@ -9,6 +9,7 @@ const add = async (store) => {
     name, googleId, email, image, nickname, oauth,
   } = client.body.content;
 
+  // TODO: Typecheck 넣어두기
   if (name && email && (googleId)) {
     user.name = name;
     user.googleId = googleId;

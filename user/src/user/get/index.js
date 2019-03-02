@@ -3,17 +3,18 @@ const database = require('../../lib/database');
 const get = async (store) => {
   const { client, res } = store;
   const col = await database.db.collection('user');
-  const { userId, googleId } = client.body.content;
+
+  const info = Object.entries(client.body.content)
+    .filter(x => ['userId', 'googleId', 'name', 'nickname']
+      .indexOf(x[0]) !== -1);
 
   let result = null;
-  if (userId) {
-    result = await col.findOne({
-      userId,
-    });
-  } else if (googleId) {
-    result = await col.findOne({
-      googleId,
-    });
+
+  if (info.length !== 0) {
+    const query = info[0][1];
+    const search = {};
+    search[info[0][0]] = query;
+    result = await col.findOne(search);
   } else {
     store.errMsg = 'Invalid user request format';
     store.errCode = 400;
@@ -27,15 +28,7 @@ const get = async (store) => {
   } else {
     res.statusCode = 200;
     res.body = result;
-    store.logger.info(`id: ${result.userId}`);
+    store.logger.info(`Query : [${info[0]}]`);
   }
 };
-module.exports = async (store) => {
-  try {
-    await get(store);
-  } catch (err) {
-    store.errMsg = 'Internal Server Error';
-    store.errCode = 500;
-    throw err;
-  }
-};
+module.exports = get;
