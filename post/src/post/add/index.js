@@ -9,24 +9,10 @@ const add = async (store) => {
   } = client.body.content;
   let { auth } = client.body.content;
 
-  // 인증
-  try {
-    auth = await send('USER', 'get', auth);
-  } catch (err) {
-    if (err.statusCode === 404) {
-      store.errMsg = 'Unauthorized access';
-      store.errCode = 401;
-    } else {
-      store.errMsg = 'Internal Service Error';
-      store.errCode = 500;
-    }
-    throw Error(store.errMsg);
-  }
-
   const post = {};
 
   // 검증
-  if (title && tags && content) {
+  if (title && tags && content && auth) {
     post.title = title;
     post.userId = auth.userId;
     post.tags = {};
@@ -44,6 +30,20 @@ const add = async (store) => {
     store.errMsg = 'Invalid post add format';
     store.errCode = 400;
     throw Error(store.errMsg);
+  }
+
+  // 인증
+  try {
+    auth = await send('USER', 'get', auth);
+  } catch (err) {
+    if (err.statusCode === 404) {
+      store.errMsg = 'Unauthorized access';
+      store.errCode = 401;
+    } else {
+      store.errMsg = 'Internal Service Error';
+      store.errCode = 500;
+    }
+    throw err;
   }
 
   const col = await database.db.collection('post');
