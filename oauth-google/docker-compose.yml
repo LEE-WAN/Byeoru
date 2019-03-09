@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  oauthgoogle:
+    build: .
+    network_mode: default
+    labels:
+      - "traefik.frontend.rule=Host:oauthgoogle.byeoru.com"
+      - "traefik.port=8002"

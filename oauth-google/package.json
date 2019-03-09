@@ -2,9 +2,6 @@
   "dependencies": {
     "cross-env": "^5.2.0",
     "dotenv": "^6.2.0",
-    "eslint": "^5.13.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.16.0",
     "google-auth-library": "^3.1.0",
     "logform": "^2.1.2",
     "logicflow": "^1.0.1",
@@ -14,10 +11,13 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
   },
   "scripts": {
-    "start": "cross-env NODE_PATH=src node src",
+    "start": "cross-env NODE_PATH=src node src/index.js",
     "start:dev": "cross-env NODE_PATH=src nodemon --watch src src/index.js"
   }
 }

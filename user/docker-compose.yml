@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+    user:
+        build: .
+        network_mode: default
+        labels:
+         - "traefik.frontend.rule=Host:user.byeoru.com"
+         - "traefik.port=8001"
