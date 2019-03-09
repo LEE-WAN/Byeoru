@@ -6,6 +6,7 @@ const Router = require('koa-router');
 
 const auth = require('./auth');
 const logger = require('./lib/logger');
+const { send } = require('./lib/message');
 
 const app = new Koa();
 const router = new Router();
@@ -28,9 +29,10 @@ app.use(async (ctx, next) => {
   ctx.set('X-Response-Time', `${ms}ms`);
 });
 
-router.get('/', (ctx, next) => {
+router.get('/', async (ctx, next) => {
   ctx.body = {
     message: 'This is API Server for Project Byeoru!',
+    test: await send('user', 'get', { userId: 1 }),
   };
   next();
 });
