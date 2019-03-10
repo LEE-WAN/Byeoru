@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <div>
-      <app-logo/>
+      <AppLogo/>
       <h1 class="title">
         view
       </h1>
@@ -17,6 +17,8 @@
           href="https://github.com/nuxt/nuxt.js"
           target="_blank"
           class="button--grey">GitHub</a>
+        <br/>
+        <NuxtLink to="/editor" class="button--grey">Editor</NuxtLink>
       </div>
     </div>
   </section>

@@ -13,7 +13,11 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "nuxt": "^2.0.0"
+    "include-media": "^1.4.9",
+    "node-sass": "^4.11.0",
+    "nuxt": "^2.0.0",
+    "open-color": "^1.6.3",
+    "sass-loader": "^7.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
