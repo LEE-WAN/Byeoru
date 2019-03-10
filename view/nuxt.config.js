@@ -1,4 +1,7 @@
 module.exports = {
+  css: [
+    { src: '~assets/css/MarkdownEditor.css', lang: 'css' }
+  ],
   /*
   ** Headers of the page
   */
