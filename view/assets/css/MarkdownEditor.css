@@ -584,7 +584,8 @@ span.CodeMirror-selectedtext { background: none; }
 }
 
 .editor-preview-active-side {
-    display: block
+  white-space: pre-wrap;
+  display: block;
 }
 
 .editor-preview-active {
