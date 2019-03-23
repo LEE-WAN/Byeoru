@@ -34,6 +34,9 @@ export default {
                     codeSyntaxHighlighting: true,
                 }                
             });
+            this.simplemde.codemirror.on("change", () => {
+                this.$store.commit('editor/updateContent', this.simplemde.value());
+            });
         }
     }
 }

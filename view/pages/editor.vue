@@ -3,9 +3,14 @@
         <div class='header'>
             Header
         </div>
-        <div class='cover'>
+        <section class="cover">
+            <GenreSelctor/>
+        </section>        
+        <section  class="inputs">
             <Title/>
-        </div>
+            <br/>
+            <TagsInput/>
+        </section>
         <content class='content'>
             <section class='markdown-editor'>
                 <MarkdownEditor/>
@@ -15,12 +20,14 @@
 </template>
 
 <script>
+import GenreSelctor from '~/components/editor/GenreSelector.vue';
 import Title from '~/components/editor/Title.vue';
 import MarkdownEditor from '~/components/editor/MarkdownEditor.vue';
+import  TagsInput  from  '~/components/editor/TagsInput.vue';
 
 export default {
     components: {
-        Title, MarkdownEditor
+        Title, MarkdownEditor, GenreSelctor, TagsInput
     },
     data () {
         return {
@@ -43,12 +50,14 @@ export default {
             background: $oc-gray-1;
             position: absolute;
         }
-        .cover {
-            height: 450px;
-            border_bottom: 1px $oc-gray-8;
-            position: relative;
-            .title {
-            }
+        .cover  {
+            height: 220px;
+        }
+        .inputs {
+            width: 700px;
+            height: 8rem;
+            bottom: 80px;
+            margin: 0 auto;
         }
         .content section {
             max-width: 64rem;
