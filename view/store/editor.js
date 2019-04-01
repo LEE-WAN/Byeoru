@@ -1,6 +1,5 @@
 export const state = () => ({
   title: '',
-  subtitle: '',
   genre: '',
   tags: [],
   content: '',
@@ -10,14 +9,9 @@ export const mutations = {
   updateTitle (state, text) {
     state.title = text;
   },
-  updateSubtitle (state, text) {
-    state.subtitle = text;
+  updateGenre (state, text) {
+    state.genre = text;
   },
-  /**
-   * 
-   * @param {*} state 
-   * @param {String} tag 
-   */
   addTags (state, tag) {
     let re = /([ㄱ-ㅎㅏ-ㅣ가-힣A-Za-z\-\_]+)/g
     let tags = tag.match(re);

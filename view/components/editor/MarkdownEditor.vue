@@ -22,6 +22,7 @@ export default {
         if (!editor) return;
         const isActive = editor.isSideBySideActive() || editor.isPreviewActive();
         if (isActive) editor.toggleFullScreen();
+        
     },
     methods: {
         initialize() {

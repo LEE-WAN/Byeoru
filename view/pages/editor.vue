@@ -10,13 +10,15 @@
             <Title/>
             <br/>
             <TagsInput/>
+            <br/>
         </section>
-        <content class='content'>
-            <section class='markdown-editor'>
-                <MarkdownEditor/>
-            </section>
-        </content>
-    </section>
+        <section class='editor'>
+            <MarkdownEditor/>
+        </section>
+        <div class='Footer'>
+            Footer
+        </div>
+    </section>    
 </template>
 
 <script>
@@ -51,17 +53,22 @@ export default {
             position: absolute;
         }
         .cover  {
-            height: 220px;
+            height: 14rem;
         }
         .inputs {
+            display: table;
             width: 700px;
             height: 8rem;
             bottom: 80px;
             margin: 0 auto;
+            padding-top: 2rem;
+            padding-bottom: 4rem;
         }
-        .content section {
-            max-width: 64rem;
-            padding: 2rem 6rem;
+        .editor {
+            max-width: 90%;
+            width: 1000px;
+            min-height: 80%;
+            padding: auto;
             margin: 0 auto;
         }
     }
