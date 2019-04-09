@@ -9,6 +9,4 @@ router.get('/', (ctx, next) => {
   next();
 });
 
-// router.use('/google', google.routes());
-
 module.exports = router;
