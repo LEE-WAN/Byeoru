@@ -1,4 +1,4 @@
-const func = require('./oauth');
+const func = require('./type');
 
 const route = async (store, ctx) => {
   const { body } = store.client;

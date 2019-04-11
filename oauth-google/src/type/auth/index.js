@@ -23,6 +23,10 @@ const auth = async (store) => {
   }
   store.logger.info(JSON.stringify({ msg: 'LOGIN REQUEST', info }));
 
+  store.statusCode = 200;
+  store.res.body = { googleId: info.id };
+
+  /*
   // TODO: USER랑 연계해서 user_id 따와야함
   try {
     userData = await send('USER', 'get', { googleId: info.id });
@@ -60,6 +64,7 @@ const auth = async (store) => {
     store.errCode = 500;
     throw new Error(store.errMsg);
   }
+  */
 };
 
 module.exports = auth;

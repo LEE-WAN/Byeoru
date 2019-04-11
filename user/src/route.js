@@ -1,4 +1,4 @@
-const func = require('./user');
+const func = require('./type');
 
 const route = async (store, ctx) => {
   const { body } = store.client;

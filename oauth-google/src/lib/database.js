@@ -6,7 +6,7 @@ const {
 } = process.env;
 
 const authMechanism = 'DEFAULT';
-const url = `mongodb://${DB_USER}:${DB_PASS}@${DB_HOST}/?authSource=auctor&authMechanism=${authMechanism}`;
+const url = `mongodb://${DB_USER}:${DB_PASS}@${DB_HOST}/?authSource=${DB_NAME}&authMechanism=${authMechanism}`;
 
 const result = {};
 result.Mongo = new MongoClient(url, { useNewUrlParser: true });

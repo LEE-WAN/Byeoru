@@ -30,33 +30,36 @@ logic.registerErr(sendRes);
 
 // https://nodejs.org/en/docs/guides/anatomy-of-an-http-transaction/
 http.createServer((req, response) => {
-  const clientLogic = new LF(logic);
   const data = [];
-  const store = {
-    client: {},
-    res: {
-      statusCode: 200,
-      body: {},
-    },
-    response,
-    errMsg: '',
-    errCode: 400,
-    logger,
-  };
 
   req.on(
     'data', (chunk) => { data.push(chunk); },
   ).on('end', async () => {
-    // all the infomation that can be used
-    store.client = {
-      headers: req.headers,
-      method: req.method,
-      body: Buffer.concat(data).toString(),
-    };
-    clientLogic.start(store);
-    // logic to proccess
-    // const result = await route(client);
-  });
-}).listen(8001, '0.0.0.0');
+    const clientLogic = new LF(logic);
 
-logger.info('USER REST API Server is started at 8001 port');
+    const store = {
+      client: {
+        headers: req.headers,
+        method: req.method,
+        body: Buffer.concat(data).toString(),
+      },
+      res: {
+        statusCode: 200,
+        body: {},
+      },
+      response,
+      errMsg: '',
+      errCode: 400,
+      logger,
+    };
+
+    clientLogic.start(store);
+  });
+}).listen(process.env.PORT || 8000, '0.0.0.0');
+
+logger.info(`${process.env.WHOAMI} REST API Server is started at ${process.env.PORT || 8000} port`);
+
+// Handle Unexpected error
+process.on('uncaughtException', (err) => {
+  logger.error(err.stack);
+});

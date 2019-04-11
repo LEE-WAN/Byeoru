@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const database = require('../../lib/database');
 
 const add = async (store) => {
@@ -32,11 +33,13 @@ const add = async (store) => {
   });
   if (result) {
     store.errMsg = 'Duplicated user infomation';
-    store.errCode = 403;
+    store.errCode = 400;
     throw new Error('Duplicated user infomation');
   }
 
-  user.userId = await database.getNextCount('userId');
+  const hash = crypto.createHash('sha256');
+  hash.update(new Date().toString());
+  user.userId = hash.digest('hex').slice(0, 10);
   user.date = new Date();
   col.insertOne(user);
 

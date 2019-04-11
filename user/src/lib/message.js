@@ -6,7 +6,7 @@ const from = process.env.WHOAMI;
  * Send msg and get answer
  * !warn! error throwable
  * !warn! bad status code will throw errer
- * @param {string} to to who?
+ * @param {string} to to whom?
  * @param {string} type for what?
  * @param {*} content additional info.
  * @returns {*} response json object

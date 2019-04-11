@@ -6,12 +6,13 @@ const from = process.env.WHOAMI;
  * Send msg and get answer
  * !warn! error throwable
  * !warn! bad status code will throw errer
- * @param {string} to to who?
+ * @param {string} to to whom?
  * @param {string} type for what?
  * @param {*} content additional info.
+ * @param {object} auth auth
  * @returns {*} response json object
  */
-const send = async (to, type, content) => {
+const send = async (to, type, content, auth = {}) => {
   let result = {
     statusCode: 500,
     headers: {},
@@ -24,7 +25,7 @@ const send = async (to, type, content) => {
   result = await request({
     uri: url,
     body: {
-      from, to, type, content,
+      from, to, type, content, auth,
     },
     json: true,
   });
