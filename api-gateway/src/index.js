@@ -5,13 +5,15 @@ const Koa = require('koa');
 const Router = require('koa-router');
 
 const auth = require('./auth');
+const editor = require('./editor');
 const logger = require('./lib/logger');
-const { send } = require('./lib/message');
 
 const app = new Koa();
 const router = new Router();
 
-const port = 3000;
+const port = process.env.PORT;
+
+app.keys = [process.env.COOKIEKEY1, process.env.COOKIEKEY2];
 
 // logger
 app.use(async (ctx, next) => {
@@ -29,18 +31,23 @@ app.use(async (ctx, next) => {
   ctx.set('X-Response-Time', `${ms}ms`);
 });
 
+app.use(async (ctx, next) => {
+  ctx.set('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 router.get('/', async (ctx, next) => {
   ctx.body = {
     message: 'This is API Server for Project Byeoru!',
-    test: await send('user', 'get', { userId: 1 }),
   };
   next();
 });
 
 router.use('/auth', auth.routes());
+router.use('/editor', editor.routes());
 
 app.use(router.routes());
 app.use(router.allowedMethods());
 app.listen(port, () => {
-  logger.info(`RENDERER server is listening to port ${port}`);
+  logger.info(`${process.env.WHOAMI} server is listening to port ${port}`);
 });
