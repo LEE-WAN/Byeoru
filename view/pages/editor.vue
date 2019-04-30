@@ -1,14 +1,9 @@
 <template>
     <section class='editor'>
-        <div class='header'>
-            Header
-        </div>
-        <section class="cover">
-            <GenreSelctor/>
-        </section>        
+        <Header/>
+        <CategorySelector/>        
         <section  class="inputs">
             <Title/>
-            <br/>
             <TagsInput/>
             <br/>
         </section>
@@ -22,14 +17,19 @@
 </template>
 
 <script>
-import GenreSelctor from '~/components/editor/GenreSelector.vue';
+import CategorySelector from '~/components/editor/CategorySelector.vue';
 import Title from '~/components/editor/Title.vue';
 import MarkdownEditor from '~/components/editor/MarkdownEditor.vue';
-import  TagsInput  from  '~/components/editor/TagsInput.vue';
+import TagsInput  from  '~/components/editor/TagsInput.vue';
+import Popup  from  '~/components/editor/Popup.vue';
+import Header from '~/components/Header.vue'
+import axios from 'axios';
+
+import { api } from '~/config';
 
 export default {
     components: {
-        Title, MarkdownEditor, GenreSelctor, TagsInput
+        Title, MarkdownEditor, CategorySelector, TagsInput, Header, Popup
     },
     data () {
         return {
@@ -41,6 +41,17 @@ export default {
             this.test = 'note that'
         }
     },
+    layout: 'default',
+    async asyncData ({req, params, store}) {
+        try {
+            const { data } = await axios.get(api('/editor/category'));
+            // console.log(data);
+            store.commit('fixed/updateCategoryList', data);
+
+        } catch (e) {
+            // store commit ERROR
+        }
+    },
     // layout: 'editor'
 }
 </script>
@@ -48,20 +59,14 @@ export default {
 <style lang="scss">
     @import '~assets/utils';
     .editor {
-        .header {
-            background: $oc-gray-1;
-            position: absolute;
-        }
-        .cover  {
-            height: 14rem;
-        }
+        position: relative;
         .inputs {
             display: table;
             width: 700px;
             height: 8rem;
             bottom: 80px;
             margin: 0 auto;
-            padding-top: 2rem;
+            padding-top: 4rem;
             padding-bottom: 4rem;
         }
         .editor {

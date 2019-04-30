@@ -1,0 +1,23 @@
+.blue {
+    background-color: $oc-blue-5;
+    &:hover {
+      background-color: $oc-blue-3;
+    }
+}
+.gray {
+    background-color: $oc-gray-5;
+    &:hover {
+      background-color: $oc-gray-3;
+    }
+}
+.button {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.1s linear;
+    color: white;
+  }

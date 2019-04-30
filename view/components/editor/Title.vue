@@ -8,7 +8,7 @@ import { mapMutations } from 'vuex'
 
 export default {
   mounted() {
-    this.$el.focus();
+    // this.$el.focus();
   },
   components: {    
   },
@@ -32,11 +32,7 @@ export default {
 <style lang="scss">
   @import '~assets/utils';
   .title {
-    font-size: 34pt;
-    font-weight: normal;
-  }
-  .tags {
-    font-size: 15pt;
+    font-size: 28pt;
     font-weight: normal;
   }
   .input {
@@ -45,7 +41,6 @@ export default {
   }
   *:empty:before{
     content: attr(placeholder);
-    font-style: italic;
     color: $oc-gray-5;
     display: block;
   }

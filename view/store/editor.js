@@ -1,6 +1,6 @@
 export const state = () => ({
   title: '',
-  genre: '',
+  category: '',
   tags: [],
   content: '',
 })
@@ -9,8 +9,8 @@ export const mutations = {
   updateTitle (state, text) {
     state.title = text;
   },
-  updateGenre (state, text) {
-    state.genre = text;
+  updateCategory (state, text) {
+    state.category = text;
   },
   addTags (state, tag) {
     let re = /([ㄱ-ㅎㅏ-ㅣ가-힣A-Za-z\-\_]+)/g
